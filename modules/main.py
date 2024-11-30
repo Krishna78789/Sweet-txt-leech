@@ -14,7 +14,11 @@ from aiohttp import ClientSession
 from pyromod import listen
 from subprocess import getstatusoutput
 from aiohttp import web
-import bot as authorization
+
+import telebot
+import os
+from telebot import types
+import time
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -30,6 +34,52 @@ bot = Client(
     api_hash=API_HASH,
     bot_token=BOT_TOKEN
 )
+
+# Telegram bot token
+TOKEN = 'BOT_TOKEN'
+bot = telebot.TeleBot(7517501506:AAHLtzz7mmDmdxpwUVz0t0qeivWtB0UHxYk)
+
+# Bot start confirmation
+print(" bot start ho gya GuRu")
+
+# Global temp_data dictionary for storing temporary data
+temp_data = {}
+
+# Authorized users with expiration times
+authorized_users = {
+    '7341059064': float('inf')  # Permanent authorization for the owner
+}
+
+# Function to check if user is authorized
+def is_authorized(user_id):
+    return user_id in authorized_users and time.time() < authorized_users[user_id]
+
+# /start command
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    user_id = str(message.from_user.id)
+    if not is_authorized(user_id):
+        bot.send_message(message.chat.id, " Unauthorized access.")
+        return
+
+    username = message.from_user.username or "User"
+    welcome_text = f" Welcome, @{username}! Welcome to the Ultimate Bot \nChoose an option below to get started:"
+    
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    owner_btn = types.InlineKeyboardButton(" Owner", url="https://t.me/Ankit_Shakya73")
+    developer_btn = types.InlineKeyboardButton(" Developer", url="https://t.me/Ankit_Shakya73")
+    functions_btn = types.InlineKeyboardButton(" Functions", callback_data="show_functions")
+    markup.add(owner_btn, developer_btn, functions_btn)
+    
+    bot.send_message(message.chat.id, welcome_text, reply_markup=markup)
+
+# /addid command
+@bot.message_handler(commands=['addid'])
+def add_user(message):
+    user_id = str(message.from_user.id)
+    if user_id != '7341059064':
+        bot.send_message(message.chat.id, " Only the owner can use this command.")
+        return
 
 # Define aiohttp routes
 routes = web.RouteTableDef()
@@ -73,16 +123,7 @@ async def main():
 async def account_login(bot: Client, m: Message):
     editable = await m.reply_text(
        f"𝐇𝐞𝐥𝐥𝐨 ❤️\n\n◆〓◆ ❖ 𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚 ❖ ™ ◆〓◆\n\n❈ I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File Om Telegram So Basically If You Want To Use Me First Send Me ⟰ /upload Command And Then Follow Few Steps..", reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("✜ 𝐉𝐨𝐢𝐧 𝐔𝐩𝐃𝐚𝐭𝐞 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ✜" ,url=f"https://t.me/AnkitShakya_Support") ],
-                    [
-                    InlineKeyboardButton("✜ 𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚 ✜" ,url="https://t.me/INNOCENT_BOY73") ],
-                    [
-                    InlineKeyboardButton("🦋 𝐅𝐨𝐥𝐥𝐨𝐰 𝐌𝐞 🦋" ,url="https://t.me/MEDICO_ANKITSHAKYA") ]                               
-            ]))
-
-
+            
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
     await m.reply_text("♦ 𝐒𝐭𝐨𝐩𝐩𝐞𝐝 ♦", True)
