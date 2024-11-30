@@ -37,7 +37,7 @@ bot = Client(
 
 # Telegram bot token
 TOKEN = 'BOT_TOKEN'
-bot = telebot.TeleBot(7517501506:AAHLtzz7mmDmdxpwUVz0t0qeivWtB0UHxYk)
+bot = telebot.TeleBot(BOT_TOKEN)
 
 # Bot start confirmation
 print(" bot start ho gya GuRu")
