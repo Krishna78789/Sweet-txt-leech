@@ -15,11 +15,6 @@ from pyromod import listen
 from subprocess import getstatusoutput
 from aiohttp import web
 
-import telebot
-import os
-from telebot import types
-import time
-
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
@@ -34,52 +29,6 @@ bot = Client(
     api_hash=API_HASH,
     bot_token=BOT_TOKEN
 )
-
-# Telegram bot token
-TOKEN = 'BOT_TOKEN'
-bot = telebot.TeleBot(BOT_TOKEN)
-
-# Bot start confirmation
-print(" bot start ho gya GuRu")
-
-# Global temp_data dictionary for storing temporary data
-temp_data = {}
-
-# Authorized users with expiration times
-authorized_users = {
-    '7341059064': float('inf')  # Permanent authorization for the owner
-}
-
-# Function to check if user is authorized
-def is_authorized(user_id):
-    return user_id in authorized_users and time.time() < authorized_users[user_id]
-
-# /start command
-@bot.message_handler(commands=['start'])
-def send_welcome(message):
-    user_id = str(message.from_user.id)
-    if not is_authorized(user_id):
-        bot.send_message(message.chat.id, " Unauthorized access.")
-        return
-
-    username = message.from_user.username or "User"
-    welcome_text = f" Welcome, @{username}! Welcome to the Ultimate Bot \nChoose an option below to get started:"
-    
-    markup = types.InlineKeyboardMarkup(row_width=2)
-    owner_btn = types.InlineKeyboardButton(" Owner", url="https://t.me/Ankit_Shakya73")
-    developer_btn = types.InlineKeyboardButton(" Developer", url="https://t.me/Ankit_Shakya73")
-    functions_btn = types.InlineKeyboardButton(" Functions", callback_data="show_functions")
-    markup.add(owner_btn, developer_btn, functions_btn)
-    
-    bot.send_message(message.chat.id, welcome_text, reply_markup=markup)
-
-# /addid command
-@bot.message_handler(commands=['addid'])
-def add_user(message):
-    user_id = str(message.from_user.id)
-    if user_id != '7341059064':
-        bot.send_message(message.chat.id, " Only the owner can use this command.")
-        return
 
 # Define aiohttp routes
 routes = web.RouteTableDef()
@@ -122,44 +71,53 @@ async def main():
 @bot.on_message(filters.command(["start"]))
 async def account_login(bot: Client, m: Message):
     editable = await m.reply_text(
-       f"𝐇𝐞𝐥𝐥𝐨 ❤️\n\n◆〓◆ ❖ 𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚 ❖ ™ ◆〓◆\n\n❈ I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File Om Telegram So Basically If You Want To Use Me First Send Me ⟰ /upload Command And Then Follow Few Steps..", reply_markup=InlineKeyboardMarkup(
-            
+       f"𝐇𝐞𝐥𝐥𝐨 ❤️\n\n◆〓◆ ❖ ANKIT ❖ ™ ◆〓◆\n\n❈ I Am A Bot For Download Links From Your **.TXT** File And Then Upload That File Om Telegram So Basically If You Want To Use Me First Send Me ⟰ /upload Command And Then Follow Few Steps..", reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("✜ 𝐉𝐨𝐢𝐧 𝐔𝐩𝐃𝐚𝐭𝐞 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 ✜" ,url=f"https://t.me/ANKIT_SHAKYA_OFFICIAL") ],
+                    [
+                    InlineKeyboardButton("✜ 𝗔𝗻𝗸𝗶𝘁𝗦𝗵𝗮𝗸𝘆𝗮 ✜" ,url="https://t.me/ANKIT_SHAKYA73") ],
+                    [
+                    InlineKeyboardButton("🦋 𝐅𝐨𝐥𝐥𝐨𝐰 𝐌𝐞 🦋" ,url="https://t.me/ANKIT_SHAKYA_OFFICIAL") ]                               
+            ]))
+
+
 @bot.on_message(filters.command("stop"))
 async def restart_handler(_, m):
-    await m.reply_text("♦ 𝐒𝐭𝐨𝐩𝐩𝐞𝐝 ♦", True)
+    await m.reply_text("𝐒𝐓𝐎𝐏𝐄𝐃🚦", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 
-@bot.on_message(filters.command(["ankit","upload"]) )
-async def txt_handler(bot: Client, m: Message):
-    editable = await m.reply_text(f"**🔹Hi I am Poweful TXT Downloader📥 Bot.**\n🔹**Send me the TXT file and wait.**")
+@bot.on_message(filters.command(["upload","ankit"]))
+async def account_login(bot: Client, m: Message):
+    editable = await m.reply_text('𝐀𝐦 𝐏𝐨𝐰𝐞𝐫𝐟𝐮𝐥𝐥 𝐓𝐗𝐓 𝐃𝐨𝐧𝐰𝐥𝐨𝐚𝐝𝐞𝐫 📥 𝐁𝐨𝐭. 𝐒𝐞𝐧𝐝 𝐌𝐞 𝐓𝐡𝐞 𝐓𝐗𝐓 𝐅𝐢𝐥𝐞𝐬 𝐀𝐧𝐝 𝐖𝐚𝐢𝐭 ⏍')
     input: Message = await bot.listen(editable.chat.id)
     x = await input.download()
     await input.delete(True)
-    file_name, ext = os.path.splitext(os.path.basename(x))
-    credit = f"𝐀𝐍𝐊𝐈𝐓 𝐒𝐇𝐀𝐊𝐘𝐀™🇮🇳"
-    try:    
-        with open(x, "r") as f:
-            content = f.read()
-        content = content.split("\n")
-        links = []
-        for i in content:
-            links.append(i.split("://", 1))
-        os.remove(x)
+
+    path = f"./downloads/{m.chat.id}"
+
+    try:
+       with open(x, "r") as f:
+           content = f.read()
+       content = content.split("\n")
+       links = []
+       for i in content:
+           links.append(i.split("://", 1))
+       os.remove(x)
+            # print(len(links)
     except:
-        await m.reply_text("Invalid file input.")
-        os.remove(x)
-        return
+           await m.reply_text("∝ 𝐈𝐧𝐯𝐚𝐥𝐢𝐝 𝐟𝐢𝐥𝐞 𝐢𝐧𝐩𝐮𝐭.")
+           os.remove(x)
+           return
+    
    
-    await editable.edit(f"Total links found are **{len(links)}**\n\nSend From where you want to download initial is **1**")
+    await editable.edit(f"∝ 𝐓𝐨𝐭𝐚𝐥 𝐋𝐢𝐧𝐤 𝐅𝐨𝐮𝐧𝐝 𝐀𝐫𝐞 🔗** **{len(links)}**\n\n𝐒𝐞𝐧𝐝 𝐅𝐫𝐨𝐦 𝐖𝐡𝐞𝐫𝐞 𝐘𝐨𝐮 𝐖𝐚𝐧𝐭 𝐓𝐨 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐈𝐧𝐢𝐭𝐚𝐥 𝐢𝐬 **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
     await input0.delete(True)
-    try:
-        arg = int(raw_text)
-    except:
-        arg = 1
+
     await editable.edit("**Enter Your Batch Name or send d for grabing from text filename.**")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
@@ -168,8 +126,9 @@ async def txt_handler(bot: Client, m: Message):
         b_name = file_name
     else:
         b_name = raw_text0
+    
 
-    await editable.edit("**Enter resolution.\n Eg : 480 or 720**")
+    await editable.edit("∝ 𝐄𝐧𝐭𝐞𝐫 𝐄𝐞𝐬𝐨𝐥𝐮𝐭𝐢𝐨𝐧 🎬\n☞ 144,240,360,480,720,1080\nPlease Choose Quality")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
     await input2.delete(True)
@@ -191,6 +150,8 @@ async def txt_handler(bot: Client, m: Message):
     except Exception:
             res = "UN"
     
+    
+
     await editable.edit("**Enter Your Name or send 'de' for use default.\n Eg : 𝐀𝐍𝐊𝐈𝐓 𝐒𝐇𝐀𝐊𝐘𝐀™👨🏻‍💻**")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
@@ -199,8 +160,8 @@ async def txt_handler(bot: Client, m: Message):
         CR = credit
     else:
         CR = raw_text3
-
-    await editable.edit("Now send the **Thumb url**\n**Eg :** `https://telegra.ph/file/0e6ab2464c68076c42c24.jpg`\n\nor Send `no`")
+   
+    await editable.edit("🌄 Now send the Thumb url\nEg » https://graph.org/file/419c60736fbac058c9e5.jpg\n\n Or if don't want thumbnail send = no")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
@@ -213,24 +174,29 @@ async def txt_handler(bot: Client, m: Message):
     else:
         thumb == "no"
 
-    count =int(raw_text)    
-    try:
-        for i in range(arg-1, len(links)):
+    if len(links) == 1:
+        count = 1
+    else:
+        count = int(raw_text)
 
-            Vxy = links[i][1].replace("file/d/","uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing","")
-            url = "https://" + Vxy
+    try:
+        for i in range(count - 1, len(links)):
+
+            V = links[i][1].replace("file/d/","uc?export=download&id=").replace("www.youtube-nocookie.com/embed", "youtu.be").replace("?modestbranding=1", "").replace("/view?usp=sharing","") # .replace("mpd","m3u8")
+            url = "https://" + V
+
             if "visionias" in url:
                 async with ClientSession() as session:
                     async with session.get(url, headers={'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9', 'Accept-Language': 'en-US,en;q=0.9', 'Cache-Control': 'no-cache', 'Connection': 'keep-alive', 'Pragma': 'no-cache', 'Referer': 'http://www.visionias.in/', 'Sec-Fetch-Dest': 'iframe', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-Site': 'cross-site', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 12; RMX2121) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36', 'sec-ch-ua': '"Chromium";v="107", "Not=A?Brand";v="24"', 'sec-ch-ua-mobile': '?1', 'sec-ch-ua-platform': '"Android"',}) as resp:
                         text = await resp.text()
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
-                        
+
             elif "media-cdn-alisg.classplusapp.com" or "tencdn.classplusapp" or "media-cdn.classplusapp" or "media-cdn-a.classplusapp" in url:
             	headers = {'Host': 'api.classplusapp.com', 'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9r', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
             	params = (('url', f'{url}'),)
             	response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
             	url = response.json()['url']
-            
+                
             elif '/master.mpd' in url:
              id =  url.split("/")[-2]
              url =  "https://d26g5bnklkwsh4.cloudfront.net/" + id + "/master.m3u8"
@@ -240,7 +206,7 @@ async def txt_handler(bot: Client, m: Message):
 
             if 'cpvod.testbook.com' in url:
                url = requests.get(f'https://rexxaa.vercel.app/get_cp?token=ghost_daddy&url={url}', headers={'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9r'}).json()['url']
-            
+
             if "youtu" in url:
                 ytf = f"b[height<={raw_text2}][ext=mp4]/bv[height<={raw_text2}][ext=mp4]+ba[ext=m4a]/b[ext=mp4]"
             else:
@@ -251,8 +217,9 @@ async def txt_handler(bot: Client, m: Message):
             else:
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
-            try:                               
-                cc = f'**[🎬] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}({res}).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
+            try:  
+                
+                cc = f'**[▶️] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}({res}).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
                 cc1 = f'**[📑] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}.pdf\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
                 if "drive" in url:
                     try:
@@ -265,19 +232,19 @@ async def txt_handler(bot: Client, m: Message):
                         await m.reply_text(str(e))
                         time.sleep(e.x)
                         continue
+                
                 elif ".pdf" in url:
                     try:
                         cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        await bot.send_document(chat_id=m.chat.id,document=f'{name}.pdf', caption=cc1)
+                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
                         count += 1
                         os.remove(f'{name}.pdf')
                     except FloodWait as e:
                         await m.reply_text(str(e))
                         time.sleep(e.x)
                         continue
-
                 else:
                     Show = f"❊⟱ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝𝐢𝐧𝐠 ⟱❊ »\n\n📝 𝐍𝐚𝐦𝐞 » `{name}\n⌨ 𝐐𝐮𝐥𝐢𝐭𝐲 » {raw_text2}`\n\n**🔗 𝐔𝐑𝐋 »** `{url}`"
                     prog = await m.reply_text(Show)
@@ -296,9 +263,8 @@ async def txt_handler(bot: Client, m: Message):
 
     except Exception as e:
         await m.reply_text(e)
-    await m.reply_text("**Done✅**")
- 
-print("""◆〓◆𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚◆〓◆""")
+    await m.reply_text("🚦𝐃𝐎𝐍𝐄🚦")
+
 print("""✅ 𝐃𝐞𝐩𝐥𝐨𝐲 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 ✅""")
 print("""✅ 𝐁𝐨𝐭 𝐖𝐨𝐫𝐤𝐢𝐧𝐠 ✅""")
 
