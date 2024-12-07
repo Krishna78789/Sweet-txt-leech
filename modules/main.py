@@ -209,7 +209,7 @@ async def account_login(bot: Client, m: Message):
                     print(url)
 
             if "/master.mpd" in url:
-                cmd= f" yt-dlp -k --allow-unplayable-formats -f bestvideo.{raw_txt2} --fixup never {url} "
+                cmd= f" yt-dlp -k --allow-unplayable-formats -f bestvideo.{quality} --fixup never {url} "
                 print("counted")
                 
             if "youtu" in url:
