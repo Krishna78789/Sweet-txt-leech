@@ -1,11 +1,7 @@
 import time
-
 import math
-
 import os
-
 from pyrogram.errors import FloodWait
-
 
 
 class Timer:
@@ -29,12 +25,7 @@ class Timer:
         return False
 
 
-
-
-
 from datetime import datetime,timedelta
-
-
 
 #lets do calculations
 
@@ -78,8 +69,6 @@ def hrt(seconds, precision = 0):
 
     
 
-
-
     if value.days:
 
         pieces.append(f"{value.days}d")
@@ -121,12 +110,7 @@ def hrt(seconds, precision = 0):
         return "".join(pieces)
 
 
-
     return "".join(pieces[:precision])
-
-
-
-
 
 
 
@@ -134,7 +118,7 @@ timer = Timer()
 
 
 
-
+# designed by Kshitij
 
 async def progress_bar(current, total, reply, start):
 
@@ -174,17 +158,37 @@ async def progress_bar(current, total, reply, start):
 
             cur = hrb(current)
 
-            bar_length = 10
+            
+
+            #don't even change anything till here
+
+            # Calculate progress bar dots
+
+            #ab mila dil ko sukun #by Kshitij
+
+            #change from here if you want 
+
+            bar_length = 11
 
             completed_length = int(current * bar_length / total)
 
             remaining_length = bar_length - completed_length
 
-            progress_bar = "▰" * completed_length + "▱" * remaining_length
+            #progress_bar = "▰" * completed_length + "▱" * remaining_length
+
+            #progress_bar = "**✦**" * completed_length + "**✧**" * remaining_length
+
+            progress_bar = "**►**" * completed_length + "**▷**" * remaining_length
+
+            
 
             try:
 
-                await reply.edit(f'\n `╭──⌈📤 𝙐𝙥𝙡𝙤𝙖𝙙𝙞𝙣𝙜 📤⌋──╮ \n├⚡ {progress_bar}|﹝{perc}﹞ \n├ 𝗦𝗽𝗲𝗲𝗱 ⚡️ ➠ {sp} \n├ 𝗣𝗿𝗼𝗴𝗿𝗲𝘀𝘀 🧭 ➠ {cur}\n├ 𝗦𝗶𝘇𝗲 🧲 ➠ {tot} \n├ 𝗘𝗧𝗔 ⏳ ➠ {eta}\n`╰──⌈ 𝗔𝗡𝗞𝗜𝗧 𝗦𝗛𝗔𝗞𝗬𝗔 🇮🇳 ⌋──╯\n') 
+                await reply.edit(f'**╭──⌈📤 𝙐𝙥𝙡𝙤𝙖𝙙𝙞𝙣𝙜 📤⌋──╮ \n┣⪼ [ {progress_bar} ]\n┣⪼ 🚀 𝙎𝙥𝙚𝙚𝙙 : {sp} \n┣⪼ 📈 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 : {perc} \n┣⪼ ⏳ 𝙇𝙤𝙖𝙙𝙚𝙙 : {cur}\n┣⪼ 🍁 𝙎𝙞𝙯𝙚 :  {tot} \n┣⪼ 🕛 𝙀𝙏𝘼 : {eta} \n╰────⌈ **✪ 𝐀𝐧𝐤𝐢𝐭 **✪** ⌋────╯**\n') 
+
+                #await reply.edit(f'`┌ 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 📈 -【 {perc} 】\n├ 𝙎𝙥𝙚𝙚𝙙 🧲 -【 {sp} 】\n└ 𝙎𝙞𝙯𝙚 📂 -【 {cur} / {tot} 】`')
+
+         #       await reply.edit(f'`╭──⌈📤 𝙐𝙥𝙡𝙤𝙖𝙙𝙞𝙣𝙜 📤⌋──╮ \n├{progress_bar}\n├ 𝙎𝙥𝙚𝙚𝙙 : {sp} \n├ 𝙋𝙧𝙤𝙜𝙧𝙚𝙨𝙨 : {perc} \n├ 𝙇𝙤𝙖𝙙𝙚𝙙 : {cur}\n├ 𝙎𝙞𝙯𝙚 :  {tot} \n├ 𝙀𝙏𝘼 : {eta} \n╰─⌈ Bot Made By 𝐀𝐧𝐤𝐢𝐭 ⌋─╯`\n') 
 
             except FloodWait as e:
 
