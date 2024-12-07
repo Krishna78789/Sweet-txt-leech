@@ -8,6 +8,7 @@ import requests
 import subprocess
 from urllib.parse import urlparse, parse_qs
 from bs4 import BeautifulSoup
+from core import get_drm_keys
 
 import core as helper
 from utils import progress_bar
