@@ -70,7 +70,7 @@ async def main():
         
 @bot.on_message(filters.command(["start"]) )
 async def account_login(bot: Client, m: Message):
-    editable = await m.reply_text(f"**Hi 👋 Sir.. How are you ?**\n**Bot Made BY 𝐁𝐀𝐓𝐌𝐀𝐍-𝐇.𝐂.™👨🏻‍💻**")
+    editable = await m.reply_text(f"**Hi 👋 Sir.. How are you ?**\n**Bot Made BY 𝐀𝐍𝐊𝐈𝐓 𝐒𝐇𝐀𝐊𝐘𝐀™👨🏻‍💻**")
 
 @bot.on_message(filters.command(["stop"]) )
 async def restart_handler(_, m):
@@ -84,7 +84,7 @@ async def txt_handler(bot: Client, m: Message):
     x = await input.download()
     await input.delete(True)
     file_name, ext = os.path.splitext(os.path.basename(x))
-    credit = f"𝐁𝐀𝐓𝐌𝐀𝐍-𝐇.𝐂.™🇮🇳"
+    credit = f"𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚™🇮🇳"
     try:    
         with open(x, "r") as f:
             content = f.read()
@@ -137,7 +137,7 @@ async def txt_handler(bot: Client, m: Message):
     except Exception:
             res = "UN"
     
-    await editable.edit("**Enter Your Name or send 'de' for use default.\n Eg : 𝐁𝐀𝐓𝐌𝐀𝐍-𝐇.𝐂.™👨🏻‍💻**")
+    await editable.edit("**Enter Your Name or send 'de' for use default.\n Eg : 𝐀𝐍𝐊𝐈𝐓 𝐒𝐇𝐀𝐊𝐘𝐀™👨🏻‍💻**")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
@@ -146,7 +146,7 @@ async def txt_handler(bot: Client, m: Message):
     else:
         CR = raw_text3
   
-    await editable.edit("Now send the **Thumb url**\n**Eg :** `https://telegra.ph/file/0e6ab2464c68076c42c24.jpg`\n\nor Send `no`")
+    await editable.edit("Now send the **Thumb url**\n**Eg :** ``\n\nor Send `no`")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
@@ -172,7 +172,7 @@ async def txt_handler(bot: Client, m: Message):
                         url = re.search(r"(https://.*?playlist.m3u8.*?)\"", text).group(1)
           
             elif "media-cdn-alisg.classplusapp.com" or "tencdn.classplusapp" or "media-cdn.classplusapp" or "media-cdn-a.classplusapp" in url:
-            	headers = {'Host': 'api.classplusapp.com', 'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
+            	headers = {'Host': 'api.classplusapp.com', 'x-access-token': 'eyJjb3Vyc2VJZCI6IjQ1NjY4NyIsInR1dG9ySWQiOm51bGwsIm9yZ0lkIjo0ODA2MTksImNhdGVnb3J5SWQiOm51bGx9r', 'user-agent': 'Mobile-Android', 'app-version': '1.4.37.1', 'api-version': '18', 'device-id': '5d0d17ac8b3c9f51', 'device-details': '2848b866799971ca_2848b8667a33216c_SDK-30', 'accept-encoding': 'gzip'}
             	params = (('url', f'{url}'),)
             	response = requests.get('https://api.classplusapp.com/cams/uploader/video/jw-signed-url', headers=headers, params=params)
             	url = response.json()['url']
@@ -198,8 +198,8 @@ async def txt_handler(bot: Client, m: Message):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:                               
-                cc = f'**[🎬] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}({res}).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
-                cc1 = f'**[📕] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}.pdf\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
+                cc = f'**[🎞️] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}({res}).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
+                cc1 = f'**[📄] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}.pdf\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -211,12 +211,13 @@ async def txt_handler(bot: Client, m: Message):
                         await m.reply_text(str(e))
                         time.sleep(e.x)
                         continue
+                
                 elif ".pdf" in url:
                     try:
                         cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        await bot.send_document(chat_id=m.chat.id,document=f'{name}.pdf', caption=cc1)
+                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
                         count += 1
                         os.remove(f'{name}.pdf')
                     except FloodWait as e:
@@ -224,7 +225,7 @@ async def txt_handler(bot: Client, m: Message):
                         time.sleep(e.x)
                         continue
                 else:
-                    Show = await m.reply_text(f"**DOWNLOADING 📥 :-**\n\n**Video Name ➢** {name}\n**Quality ➢** {raw_text2}\n\n** 𝐓𝐡𝐢𝐬 𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 ➤ 𝐁𝐀𝐓𝐌𝐀𝐍-𝐇.𝐂.™**🇮🇳")
+                    Show = await m.reply_text(f"**DOWNLOADING 📥 :-**\n\n**Video Name ➢** {name}\n**Quality ➢** {raw_text2}\n\n** 𝐓𝐡𝐢𝐬 𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲 ➤ 𝐀𝐧𝐤𝐢𝐭 𝐒𝐡𝐚𝐤𝐲𝐚™**🇮🇳")
                     prog = await m.reply_text(Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
