@@ -179,7 +179,7 @@ async def txt_handler(bot: Client, m: Message):
             
             elif '/master.mpd' in url:
              id =  url.split("/")[-2]
-             url =  "https://d26g5bnklkwsh4.cloudfront.net/" + id + "/master.m3u8"
+             url =  "https://madxapi-d0cbf6ac738c.herokuapp.com/" + id + "/master.m3u8?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3NDI5MTMyMDcuMDcxLCJkYXRhIjp7Il9pZCI6IjY2M2ExZDRlZDUyYjBhNGZjMzE1Zjk3ZCIsInVzZXJuYW1lIjoiOTI1MzEyNTEwMyIsImZpcnN0TmFtZSI6IkFycGl0YSIsIm9yZ2FuaXphdGlvbiI6eyJfaWQiOiI1ZWIzOTNlZTk1ZmFiNzQ2OGE3OWQxODkiLCJ3ZWJzaXRlIjoicGh5c2ljc3dhbGxhaC5jb20iLCJuYW1lIjoiUGh5c2ljc3dhbGxhaCJ9LCJlbWFpbCI6Im1paGlydGhha3VyOTU0M0BnbWFpbC5jb20iLCJyb2xlcyI6WyI1YjI3YmQ5NjU4NDJmOTUwYTc3OGM2ZWYiXSwiY291bnRyeUdyb3VwIjoiSU4iLCJ0eXBlIjoiVVNFUiJ9LCJpYXQiOjE3NDIzMDg0MDd9.IAWOwZDpo8Zj_GR00rt8nUqfdtpwpe7h2KAM8uicOKw"
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
             name = f'{str(count).zfill(3)}) {name1[:60]}'
@@ -198,8 +198,8 @@ async def txt_handler(bot: Client, m: Message):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:                               
-                cc = f'**[🎞️] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}( Jay Shree Ram ).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
-                cc1 = f'**[📄] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}( Jay Shree Ram ).pdf\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
+                cc = f'**[🎞️] Vid_ID :** {str(count).zfill(3)}\n\n**Video Title :** {name1}( Kanhaiya ).mkv\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
+                cc1 = f'**[📄] Pdf_ID :** {str(count).zfill(3)}\n\n**File Title :** {name1}( Kanhaiya ).pdf\n\n**Batch Name :** {b_name}\n\n**Extracted By ➤ {CR}**'
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
